@@ -167,6 +167,7 @@ public class EventListener implements Listener {
             if(plugin.status == 0){
                 return;
             }
+            
             if (player.getName().equals(plugin.player)) {
                 if (plugin.line.get(0).get(0).level.getFolderName().equals(block.getLevel().getFolderName()) && plugin.line.get(0).get(0).x <= block.x && plugin.line.get(0).get(0).y <= block.y && plugin.line.get(0).get(0).z <= block.z && plugin.line.get(4).get(3).x >= block.x && plugin.line.get(4).get(3).y >= block.y && plugin.line.get(4).get(3).z >= block.z) {
                     if (block.y == plugin.line.get(0).get(0).y) {
@@ -184,7 +185,7 @@ public class EventListener implements Listener {
                             BlockEntitySign sign = new BlockEntitySign(blockEntity.chunk, blockEntity.namedTag);
                             sign.setText(TextFormat.GOLD + "§lDontTapTheWhiteTile", TextFormat.GREEN + "游戏状态: 点击开始", TextFormat.AQUA + "当前玩家: 无", TextFormat.WHITE + "作者:WetABQ");
                         } else if (block.getId() == 35 && block.getDamage() == 15) {
-                            if(plugin.game == 50){
+                            if(plugin.game == 49){
                                 long nanotime = System.nanoTime() - plugin.StartTime;
                                 BigDecimal b = new BigDecimal(((double) nanotime / 1000000000));
                                 double gametime = b.setScale(8, BigDecimal.ROUND_HALF_UP).doubleValue();
