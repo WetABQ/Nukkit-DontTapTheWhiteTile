@@ -10,9 +10,9 @@ DontTapTheWhiteTile  - Nukkit plugin
   2. Put the plugin in the plugins folder.
   3. Restart your server.
 
-- **Set the game**
-  1. Enter '/dset' in the game
-  2. According tips to build a 5 (high) * 4 (wide) frame, and then put two signs next to.
+- **Set the game** 
+  1. Enter '/dset' in the game.
+  2. According tips to build a 5 (high) * 4 (wide) frame, and then put four signs next to.
   
 - **Play the game**
   1. Click already set the start button.
@@ -25,9 +25,13 @@ DontTapTheWhiteTile  - Nukkit plugin
 ```
 status: 0 #Set the state
 top: false #Top1 sign location
+top2: false #Top2 sign location
+top3: false #Top3 sign location
 start: false #Start button position
 line: {} #Game area
 first: 999 # First time used
+second: 999 # Second time used
+third: 999 # Third time used
 ```
 
 --------
