@@ -142,7 +142,7 @@ public class EventListener implements Listener {
                         BlockEntitySign sign = new BlockEntitySign(blockEntity.chunk, blockEntity.namedTag);
                         sign.setText(TextFormat.GOLD + "§lDontTapTheWhiteTile", TextFormat.GREEN + "游戏状态: 点击开始", TextFormat.AQUA + "当前玩家: 无", TextFormat.WHITE + "作者:WetABQ");
                         plugin.status++;
-                        player.sendTitle(TextFormat.GOLD + "请点击木牌作为排行榜");
+                        player.sendTitle(TextFormat.GOLD + "请点击木牌作为排行榜1");
                     } else {
                         player.sendMessage(TextFormat.RED + "请点击木牌!");
                     }
@@ -154,9 +154,33 @@ public class EventListener implements Listener {
                         BlockEntitySign sign = new BlockEntitySign(blockEntity.chunk, blockEntity.namedTag);
                         sign.setText(TextFormat.GOLD + "§lTop1", TextFormat.YELLOW + "无", TextFormat.AQUA + "999", TextFormat.WHITE + "作者:WetABQ");
                         plugin.status++;
+                        player.sendTitle(TextFormat.GOLD + "请点击木牌作为排行榜2");
+                    } else {
+                        player.sendMessage(TextFormat.RED + "请点击木牌!");
+                    }
+                    break;
+                case 4:
+                    if (block.getId() == 63 || block.getId() == 68 || block.getId() == 323) {
+                        plugin.top2 = block.getLocation();
+                        BlockEntity blockEntity = block.getLevel().getBlockEntity(block.getLocation());
+                        BlockEntitySign sign = new BlockEntitySign(blockEntity.chunk, blockEntity.namedTag);
+                        sign.setText(TextFormat.GOLD + "§lTop2", TextFormat.YELLOW + "无", TextFormat.AQUA + "999", TextFormat.WHITE + "作者:WetABQ");
+                        plugin.status++;
+                        player.sendTitle(TextFormat.GOLD + "请点击木牌作为排行榜3");
+                    } else {
+                        player.sendMessage(TextFormat.RED + "请点击木牌!");
+                    }
+                    break;
+                case 5:
+                    if (block.getId() == 63 || block.getId() == 68 || block.getId() == 323) {
+                        plugin.top3 = block.getLocation();
+                        BlockEntity blockEntity = block.getLevel().getBlockEntity(block.getLocation());
+                        BlockEntitySign sign = new BlockEntitySign(blockEntity.chunk, blockEntity.namedTag);
+                        sign.setText(TextFormat.GOLD + "§lTop3", TextFormat.YELLOW + "无", TextFormat.AQUA + "999", TextFormat.WHITE + "作者:WetABQ");
+                        plugin.status++;
                         plugin.set = "";
                         plugin.saveData();
-                        player.sendTitle(TextFormat.GOLD + "别踩白块儿 全部设置完成 , 可以进行游戏了!");
+                        player.sendTitle(TextFormat.GOLD + "全部设置完成 可以进行游戏了!");
                     } else {
                         player.sendMessage(TextFormat.RED + "请点击木牌!");
                     }
@@ -167,7 +191,7 @@ public class EventListener implements Listener {
             if(plugin.status == 0){
                 return;
             }
-            
+
             if (player.getName().equals(plugin.player)) {
                 if (plugin.line.get(0).get(0).level.getFolderName().equals(block.getLevel().getFolderName()) && plugin.line.get(0).get(0).x <= block.x && plugin.line.get(0).get(0).y <= block.y && plugin.line.get(0).get(0).z <= block.z && plugin.line.get(4).get(3).x >= block.x && plugin.line.get(4).get(3).y >= block.y && plugin.line.get(4).get(3).z >= block.z) {
                     if (block.y == plugin.line.get(0).get(0).y) {
@@ -180,7 +204,7 @@ public class EventListener implements Listener {
                             plugin.player = null;
                             plugin.game = 0;
                             plugin.StartTime = 0;
-                            player.sendTitle("你失败了!");
+                            player.sendTitle(TextFormat.RED+"你失败了!");
                             BlockEntity blockEntity = plugin.line.get(0).get(0).getLevel().getBlockEntity(plugin.start);
                             BlockEntitySign sign = new BlockEntitySign(blockEntity.chunk, blockEntity.namedTag);
                             sign.setText(TextFormat.GOLD + "§lDontTapTheWhiteTile", TextFormat.GREEN + "游戏状态: 点击开始", TextFormat.AQUA + "当前玩家: 无", TextFormat.WHITE + "作者:WetABQ");
@@ -191,10 +215,24 @@ public class EventListener implements Listener {
                                 double gametime = b.setScale(8, BigDecimal.ROUND_HALF_UP).doubleValue();
                                 player.sendTitle(TextFormat.GREEN+"恭喜通关,成绩"+(float)gametime);
                                 if(gametime < plugin.first){
+                                    plugin.first = gametime;
+                                    //plugin.getLogger().info(gametime+"|"+plugin.first);
                                     BlockEntity blockEntity = plugin.top.getLevel().getBlockEntity(plugin.top);
                                     BlockEntitySign sign = new BlockEntitySign(blockEntity.chunk, blockEntity.namedTag);
                                     sign.setText(TextFormat.GOLD + "§lTop1", TextFormat.YELLOW + player.getName(), TextFormat.AQUA + ""+(float)gametime, TextFormat.WHITE + "作者:WetABQ");
                                     plugin.getServer().broadcastMessage(TextFormat.GOLD+"恭喜 "+player.getName()+" 获得了别踩白块第一名");
+                                }else if(gametime < plugin.second){
+                                    plugin.second = gametime;
+                                    BlockEntity blockEntity = plugin.top2.getLevel().getBlockEntity(plugin.top2);
+                                    BlockEntitySign sign = new BlockEntitySign(blockEntity.chunk, blockEntity.namedTag);
+                                    sign.setText(TextFormat.GOLD + "§lTop2", TextFormat.YELLOW + player.getName(), TextFormat.AQUA + ""+(float)gametime, TextFormat.WHITE + "作者:WetABQ");
+                                    plugin.getServer().broadcastMessage(TextFormat.GOLD+"恭喜 "+player.getName()+" 获得了别踩白块第二名");
+                                }else if(gametime < plugin.third){
+                                    plugin.third = gametime;
+                                    BlockEntity blockEntity = plugin.top3.getLevel().getBlockEntity(plugin.top3);
+                                    BlockEntitySign sign = new BlockEntitySign(blockEntity.chunk, blockEntity.namedTag);
+                                    sign.setText(TextFormat.GOLD + "§lTop3", TextFormat.YELLOW + player.getName(), TextFormat.AQUA + ""+(float)gametime, TextFormat.WHITE + "作者:WetABQ");
+                                    plugin.getServer().broadcastMessage(TextFormat.GOLD+"恭喜 "+player.getName()+" 获得了别踩白块第三名");
                                 }
                                 plugin.player = null;
                                 BlockEntity blockEntity = plugin.line.get(0).get(0).getLevel().getBlockEntity(plugin.start);
