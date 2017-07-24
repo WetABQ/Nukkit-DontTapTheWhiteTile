@@ -40,12 +40,16 @@ public class DontTapTheWhiteTile extends PluginBase{
     public HashMap<Integer,HashMap<Integer,Position>> line = new HashMap<>(); // 游戏区域
     public Integer status; //设置状态
     public Position top; //排行榜坐标
+    public Position top2; //排行榜2坐标
+    public Position top3; //排行榜3坐标
     public Position start; //开始坐标
     public Position pos1;//方框点1
     public Position pos2;//方框点2
     public long StartTime;
     public int game;
     public double first;
+    public double second;
+    public double third;
     public HashMap<Integer,HashMap<Integer,Block>> color = new HashMap<>();
     private static DontTapTheWhiteTile plugin;
 
@@ -62,9 +66,13 @@ public class DontTapTheWhiteTile extends PluginBase{
         if (!this.config.exists("status")){
             this.config.set("status","0"); //设置状态
             this.config.set("top","false"); //第一名牌子
+            this.config.set("top2","false"); //第二名牌子
+            this.config.set("top3","false"); //第三名牌子
             this.config.set("start","false"); //开始牌子
             this.config.set("line",new HashMap<>());//游戏区域
             this.config.set("first","999");
+            this.config.set("second","999");
+            this.config.set("third","999");
             this.config.save();
         }
         initCommand();
@@ -72,6 +80,10 @@ public class DontTapTheWhiteTile extends PluginBase{
         if(status != 0) {
             String[] t = config.get("top").toString().split(":");
             top = new Position(Float.parseFloat(t[0]),Float.parseFloat(t[1]), Float.parseFloat(t[2]), this.getServer().getLevelByName(t[3]));
+            String[] t2 = config.get("top2").toString().split(":");
+            top2 = new Position(Float.parseFloat(t2[0]),Float.parseFloat(t2[1]), Float.parseFloat(t2[2]), this.getServer().getLevelByName(t2[3]));
+            String[] t3 = config.get("top3").toString().split(":");
+            top3 = new Position(Float.parseFloat(t3[0]),Float.parseFloat(t3[1]), Float.parseFloat(t3[2]), this.getServer().getLevelByName(t3[3]));
             //this.getLogger().info(""+top);
             String[] s = config.get("start").toString().split(":");
             start = new Position(Float.parseFloat(s[0]), Float.parseFloat(s[1]), Float.parseFloat(s[2]),this.getServer().getLevelByName(t[3]));
@@ -94,11 +106,17 @@ public class DontTapTheWhiteTile extends PluginBase{
             }
             //line = (HashMap) config.get("line");
             first = Double.parseDouble(config.get("first").toString());
+            second = Double.parseDouble(config.get("second").toString());
+            third = Double.parseDouble(config.get("third").toString());
         }else{
             top = new Position();
+            top2 = new Position();
+            top3 = new Position();
             start = new Position();
             line = new HashMap();
             first = 999;
+            second = 999;
+            third = 999;
         }
         this.player = null;
         this.getLogger().notice("游戏 *别踩白块儿* 开启 !");
@@ -119,6 +137,7 @@ public class DontTapTheWhiteTile extends PluginBase{
         Server.getInstance().getCommandMap().register("", new DelGame());
     }
 
+
     public void saveData(){
         /*ConfigSection map = new ConfigSection();
         map.put("status",status);
@@ -132,6 +151,8 @@ public class DontTapTheWhiteTile extends PluginBase{
         if(status != 0) {
             config.set("status", status);
             config.set("top", top.x + ":" + top.y + ":" + top.z + ":" + top.level.getFolderName());
+            config.set("top2", top2.x + ":" + top2.y + ":" + top2.z + ":" + top2.level.getFolderName());
+            config.set("top3", top3.x + ":" + top3.y + ":" + top3.z + ":" + top3.level.getFolderName());
             config.set("start", start.x + ":" + start.y + ":" + start.z + ":" + start.level.getFolderName());
             String l = "";
             for (Map.Entry<Integer, HashMap<Integer, Position>> entry : line.entrySet()) {
@@ -145,6 +166,8 @@ public class DontTapTheWhiteTile extends PluginBase{
             l = l.substring(0, l.length() - 1);
             config.set("line", l);
             config.set("first", first);
+            config.set("second", second);
+            config.set("third", third);
             config.save();
         }
     }
