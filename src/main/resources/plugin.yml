@@ -1,0 +1,6 @@
+name: DontTapTheWhiteTile
+main: DontTapTheWhiteTile.DontTapTheWhiteTile
+version: "1.0.0"
+author: WetABQ
+api: ["1.0.0"]
+description: DontTapTheWhiteTile by WetABQ
